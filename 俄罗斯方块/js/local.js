@@ -11,12 +11,15 @@ var Local = function(){
 					break;
 				case 37:
 					//left;
+					game.left();
 					break;
 				case 38:
-					//top
+					//top 切换形态
+					game.rotate();
 					break;
 				case 39:
 					//right；
+					game.right();
 					break;
 				case 40:
 					//down;

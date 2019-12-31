@@ -122,12 +122,39 @@ var Game = function(){
 			}
 		}
 	}
+	//旋转
+	var rotate = function(){
+		if(cur.canRotate(isValid)){
+			clearData();
+			cur.rotate();
+			setData();
+			refresh(gameData,gameDivs);
+		}
+	}
 	//下移
 	var down = function(){
 		//初始化原点位置
 		if(cur.canDown(isValid)){
 			clearData();
 			cur.down();
+			setData();
+			refresh(gameData,gameDivs);
+		}
+	}
+	//右移动
+	var right = function(){
+		if(cur.canRight(isValid)){
+			clearData();
+			cur.right();
+			setData();
+			refresh(gameData,gameDivs);
+		}
+	}
+	//左移动
+	var left = function(){
+		if(cur.canLeft(isValid)){
+			clearData();
+			cur.left();
 			setData();
 			refresh(gameData,gameDivs);
 		}
@@ -152,4 +179,7 @@ var Game = function(){
 	//导出API
 	this.init = init;
 	this.down = down;
+	this.right = right;
+	this.left = left;
+	this.rotate = rotate;
 }
