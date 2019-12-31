@@ -70,13 +70,25 @@ var Game = function(){
 	var init = function(doms){
 		gameDiv = doms.gameDiv;
 		nextDiv = doms.nextDiv;
+		//实例化方块数据
 		cur = new Square();
 		next = new Square();
+		//初始化游戏区的所有方块布局
 		initDiv(gameData,gameDivs,gameDiv);//用div填充游戏区
 		initDiv(next.data,nextDivs,nextDiv);//用div填充待出现方块区
-		
+		//初始化原点位置
+		cur.origin.x = 10;
+		cur.origin.y = 5;
+		//在game游戏区更新掉落方块的位置。所以就是需要把当前方块的位置赋值到game游戏区的对应位置。
+		for(var i = 0; i < cur.data.length; i++){
+			for(var j = 0; j< cur.data[0].length; j++){
+				gameData[cur.origin.x + i][cur.origin.y + j] = cur.data[i][j];
+			}
+		}
+		//刷新游戏区方块布局
 		refresh(gameData,gameDivs);
 		refresh(cur.data,nextDivs);
 	}
+	//导出API
 	this.init = init;
 }
