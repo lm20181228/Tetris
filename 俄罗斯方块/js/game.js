@@ -23,7 +23,7 @@ var Game = function(){
 		[0,0,0,0,0,0,0,0,0,0],
 		[0,1,0,0,0,0,0,0,0,0],
 		[1,1,0,0,0,0,0,0,0,0],
-		[1,1,2,2,2,2,0,0,0,0]
+		[1,1,1,1,1,1,0,0,0,0]
 	];
 	//当前方块   下一个方块
 	var cur,next;
@@ -66,6 +66,72 @@ var Game = function(){
 			}
 		}
 	}
+	//检测点是否合法
+	var check = function(pos,x,y){
+		if(pos.x + x < 0){
+			//上边界
+			return false;
+		}else if(pos.x + x >= gameData.length){
+			//下边界
+			return false;
+		}else if(pos.y + y < 0){
+			//左边界
+			return false;
+		}else if(pos.y + y >=gameData[0].length){
+			//右边界
+			return false;
+		}else if(gameData[pos.x + x][pos.y + y] ==1){
+			//位置上已经有完成的方块
+			
+			return false;
+		}else{
+			return true;
+		}
+	}
+	//检测数据是否合理
+	var isValid = function(pos,data){
+		for(var i = 0; i < data.length; i++){
+			for(var j = 0; j <data[0].length; j++){
+				if(data[i][j] != 0){
+					if(!check(pos,i,j)){
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	//清除数据
+	var clearData = function(){
+		
+		for(var i = 0; i < cur.data.length; i++){
+			for(var j = 0; j< cur.data[0].length; j++){
+				if(check(cur.origin,i,j)){
+					gameData[cur.origin.x + i][cur.origin.y + j] = 0;
+				}
+			}
+		}
+	}
+	//设置数据，修改方块下落位置
+	var setData = function (){
+		for(var i = 0; i < cur.data.length; i++){
+			for(var j = 0; j< cur.data[0].length; j++){
+				if(check(cur.origin,i,j)){
+					gameData[cur.origin.x + i][cur.origin.y + j] = cur.data[i][j];
+				}
+			}
+		}
+	}
+	//下移
+	var down = function(){
+		//初始化原点位置
+		if(cur.canDown(isValid)){
+			clearData();
+			cur.down();
+			setData();
+			refresh(gameData,gameDivs);
+		}
+	}
 	//初始化
 	var init = function(doms){
 		gameDiv = doms.gameDiv;
@@ -76,19 +142,14 @@ var Game = function(){
 		//初始化游戏区的所有方块布局
 		initDiv(gameData,gameDivs,gameDiv);//用div填充游戏区
 		initDiv(next.data,nextDivs,nextDiv);//用div填充待出现方块区
-		//初始化原点位置
-		cur.origin.x = 10;
-		cur.origin.y = 5;
+		
 		//在game游戏区更新掉落方块的位置。所以就是需要把当前方块的位置赋值到game游戏区的对应位置。
-		for(var i = 0; i < cur.data.length; i++){
-			for(var j = 0; j< cur.data[0].length; j++){
-				gameData[cur.origin.x + i][cur.origin.y + j] = cur.data[i][j];
-			}
-		}
+		setData();
 		//刷新游戏区方块布局
 		refresh(gameData,gameDivs);
 		refresh(cur.data,nextDivs);
 	}
 	//导出API
 	this.init = init;
+	this.down = down;
 }
