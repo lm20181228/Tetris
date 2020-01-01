@@ -8,6 +8,7 @@ var Local = function(){
 			switch(e.keyCode){
 				case 32:
 					//space;
+					game.fall();
 					break;
 				case 37:
 					//left;

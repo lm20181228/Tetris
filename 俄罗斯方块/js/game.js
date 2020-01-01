@@ -126,7 +126,7 @@ var Game = function(){
 	var rotate = function(){
 		if(cur.canRotate(isValid)){
 			clearData();
-			cur.rotate();
+			// cur.rotate();
 			setData();
 			refresh(gameData,gameDivs);
 		}
@@ -139,6 +139,9 @@ var Game = function(){
 			cur.down();
 			setData();
 			refresh(gameData,gameDivs);
+			return true;
+		}else{
+			return false;
 		}
 	}
 	//右移动
@@ -182,4 +185,10 @@ var Game = function(){
 	this.right = right;
 	this.left = left;
 	this.rotate = rotate;
+	this.fall= function(){
+		while(down()){
+			down();
+		}
+		return false;
+	}
 }
