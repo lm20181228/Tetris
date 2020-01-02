@@ -14,7 +14,7 @@ var Square = function(){
 	};
 	//旋转数组
 	this.totates =function(data){
-		var sArray=[
+		var sArray=[	
 			[0,0,0,0],
 			[0,0,0,0],
 			[0,0,0,0],
