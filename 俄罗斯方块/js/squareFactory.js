@@ -152,7 +152,6 @@
 	var SquareFactory = function(){}
 	SquareFactory.prototype.make = function(){
 		var index = Math.ceil(Math.random()*7);
-		console.log(index);
 		var s;
 		switch(index){
 			case 1:

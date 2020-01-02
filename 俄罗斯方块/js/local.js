@@ -89,6 +89,7 @@ var Local = function(){
 			timeunc = null;
 		}
 		document.onkeydown = null;
+		document.getElementById("gameOver").style.display = "block";
 	}
 	//导出API
 	this.start = start;
