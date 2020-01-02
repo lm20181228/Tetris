@@ -1,7 +1,7 @@
 //游戏核心代码
 var Game = function(){
 	//dom元素
-	var gameDiv,nextDiv;
+	var gameDiv,nextDiv,scoreDiv;
 	//游戏矩阵
 	var gameData = [
 		[0,0,0,0,0,0,0,0,0,0],
@@ -32,7 +32,6 @@ var Game = function(){
 	var gameDivs = [];
 	//初始化div
 	var initDiv = function(initData, initDivArray,elem){
-		console.log(initData.length);
 		for(var i = 0; i < initData.length;  i++){
 			var gameDiv = [];
 			for(var j = 0; j <initData[0].length; j++){
@@ -180,7 +179,6 @@ var Game = function(){
 		cur = next;
 		setData();
 		next = SquareFactory.prototype.make();
-		console.log(next);
 		refresh(gameData,gameDivs);
 		refresh(next.data,nextDivs)
 	}
@@ -204,16 +202,26 @@ var Game = function(){
 				for(var n=0;n<gameData[0].length;n++){
 					gameData[0][n] = 0;
 				}
+				setRecord();
 				i++;
 			}
-
 		}
-		
+	}
+	//判断游戏是否结束
+	var checkGameOver = function(){
+		var gameOver = false;
+		for(var i = 0;i<gameData[0].length;i++){
+			if(gameData[1][i] == 1){
+				gameOver = true;
+			}
+		}
+		return gameOver;		
 	}
 	//初始化
 	var init = function(doms){
 		gameDiv = doms.gameDiv;
 		nextDiv = doms.nextDiv;
+		scoreDiv=doms.recodeDiv;
 		//实例化方块数据
 		cur = SquareFactory.prototype.make();
 		next = SquareFactory.prototype.make();
@@ -227,6 +235,13 @@ var Game = function(){
 		refresh(gameData,gameDivs);
 		refresh(next.data,nextDivs);
 	}
+	//设置分数
+	var record = 0;
+	var setRecord = function(){
+		record++;
+		scoreDiv.innerHTML = record;
+	}
+	
 	//导出API
 	this.init = init;
 	this.down = down;
@@ -242,4 +257,5 @@ var Game = function(){
 	this.fixed = fixed;
 	this.performNext = performNext;
 	this.checkClear = checkClear;
+	this.checkGameOver = checkGameOver;
 }
