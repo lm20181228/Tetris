@@ -53,13 +53,29 @@ var Local = function(){
 			}
 		}
 	}
+	// 随机生成干扰行
+	var generataBottomLine = function(lineNum){
+		var lines = [];
+		for(var i =0; i < lineNum; i++){
+			var line = [];
+			for(var j = 0; j<10; j++){
+				line[j]=Math.floor(Math.random()*2);
+			}
+			lines.push(line);
+		} 
+		return lines;
+	}
 	//计时函数
 	var timeunc = null;
 	var timeFunc = function(doms){
 		timeunc = setInterval(function(){
 			time++;
 			doms.timeDiv.innerHTML = time;
+			if( time % 10 ==0){
+				game.addTailLines(generataBottomLine(1));
+			}
 		},1000) ;
+
 	}
 	//设置时间
 	//开始

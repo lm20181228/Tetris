@@ -217,6 +217,20 @@ var Game = function(){
 		}
 		return gameOver;		
 	}
+	// 底部增加行
+	var addTailLines = function(lines){
+		// 把现有的游戏数据往上移动 lines 行，然后在空出的地方添加新的干扰行
+		for(var i = 0; i < gameData.length - lines.length; i++){
+			gameData[i] = gameData[i + lines.length];
+		}
+		for(var i = 0; i <lines.length; i++){
+			gameData[gameData.length - lines.length + i] = lines[i];
+		}
+		cur.origin.x = cur.origin.x - lines.length;
+		if(cur.origin.x	< 0 ){
+			cur.origin.x = 0;
+		}
+	}
 	//初始化
 	var init = function(doms){
 		gameDiv = doms.gameDiv;
@@ -258,4 +272,5 @@ var Game = function(){
 	this.performNext = performNext;
 	this.checkClear = checkClear;
 	this.checkGameOver = checkGameOver;
+	this.addTailLines = addTailLines;
 }
