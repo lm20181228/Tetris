@@ -48,6 +48,7 @@ var Local = function(){
 			if(game.checkGameOver()){
 				//判断游戏是否结束
 				stop();
+				game.GameOver(true)
 			}else{
 				game.performNext();
 			}
@@ -67,10 +68,10 @@ var Local = function(){
 	}
 	//计时函数
 	var timeunc = null;
-	var timeFunc = function(doms){
+	var timeFunc = function(){
 		timeunc = setInterval(function(){
 			time++;
-			doms.timeDiv.innerHTML = time;
+			game.setTime(time);
 			if( time % 10 ==0){
 				game.addTailLines(generataBottomLine(1));
 			}
@@ -81,16 +82,17 @@ var Local = function(){
 	//开始
 	var start = function(){
 		var doms = {
-			gameDiv :document.getElementById("game"),
-			nextDiv :document.getElementById("next"),
-			recodeDiv :document.getElementById("recode"),
-			timeDiv :document.getElementById("time")
+			gameDiv :document.getElementById("local_game"),
+			nextDiv :document.getElementById("local_next"),
+			recodeDiv :document.getElementById("local_recode"),
+			timeDiv :document.getElementById("local_time"),
+			gameOverDiv:document.getElementById("local_gameOver")
 		}
 		game = new Game();
 		game.init(doms);
 		bindKeyEvent();
 		//计时系统
-		timeFunc(doms);
+		timeFunc();
 		//定时器效果，方块自由下落效果
 		timer = setInterval (move ,INITERVAL) 
 	}
@@ -105,7 +107,6 @@ var Local = function(){
 			timeunc = null;
 		}
 		document.onkeydown = null;
-		document.getElementById("gameOver").style.display = "block";
 	}
 	//导出API
 	this.start = start;

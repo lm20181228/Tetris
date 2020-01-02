@@ -1,7 +1,7 @@
 //游戏核心代码
 var Game = function(){
 	//dom元素
-	var gameDiv,nextDiv,scoreDiv;
+	var gameDiv,nextDiv,timeDiv,scoreDiv,gameOverDiv;
 	//游戏矩阵
 	var gameData = [
 		[0,0,0,0,0,0,0,0,0,0],
@@ -202,7 +202,7 @@ var Game = function(){
 				for(var n=0;n<gameData[0].length;n++){
 					gameData[0][n] = 0;
 				}
-				setRecord();
+				addScore();
 				i++;
 			}
 		}
@@ -216,6 +216,13 @@ var Game = function(){
 			}
 		}
 		return gameOver;		
+	}
+	// 游戏结束
+	var GameOver =  function(flag){
+		if(flag){
+			gameOverDiv.style.display = "block";
+		}
+		
 	}
 	// 底部增加行
 	var addTailLines = function(lines){
@@ -235,7 +242,10 @@ var Game = function(){
 	var init = function(doms){
 		gameDiv = doms.gameDiv;
 		nextDiv = doms.nextDiv;
-		scoreDiv=doms.recodeDiv;
+		timeDiv = doms.timeDiv;
+		scoreDiv = doms.recodeDiv;
+		gameOverDiv = doms.gameOverDiv;
+
 		//实例化方块数据
 		cur = SquareFactory.prototype.make();
 		next = SquareFactory.prototype.make();
@@ -251,11 +261,13 @@ var Game = function(){
 	}
 	//设置分数
 	var record = 0;
-	var setRecord = function(){
+	var addScore = function(){
 		record++;
 		scoreDiv.innerHTML = record;
 	}
-	
+	var setTime = function(time){
+		timeDiv.innerHTML = time;
+	}
 	//导出API
 	this.init = init;
 	this.down = down;
@@ -272,5 +284,8 @@ var Game = function(){
 	this.performNext = performNext;
 	this.checkClear = checkClear;
 	this.checkGameOver = checkGameOver;
+	this.setTime =setTime;
+	this.addScore = addScore;
+	this.GameOver = GameOver;
 	this.addTailLines = addTailLines;
 }

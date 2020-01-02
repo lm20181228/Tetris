@@ -7,26 +7,52 @@
 
 </head>
 <body>
-	<div class="game"  id="game"></div>
-	<div class="gameOver" id="gameOver">
-		<p>游戏结束啦</p>
+	<div class="tips">
+		<p>游戏注释：用键盘控制方块的下落和变形</p>
+		<p> ↑ ：变形; ← ：左移; ↓ ：下移（有自定义的下落速度）; → ：右移; 空格 ：速降（会直接到达最下层）</p>
 	</div>
-	<div class="info">
-		<div class="next"  id="next"></div>
-		<div class="time">
-			<p>已用时： <span id="time">0</span>s</p>
-			<p>已得分： <span id="recode">0</span>分</p>
+	<div class="local">
+		<p class="title">我的游戏区</p>
+		<div class="game"  id="local_game"></div>
+		<div class="gameOver" id="local_gameOver">
+			<p>游戏结束啦</p>
+		</div>
+		<div class="info">
+			<div class="next"  id="local_next"></div>
+			<div class="time">
+				<p>已用时： <span id="local_time">0</span>s</p>
+				<p>已得分： <span id="local_recode">0</span>分</p>
+			</div>
 		</div>
 	</div>
-	<div class="tips">
-		<p>游戏注释：</p>
-		<p>用键盘控制方块的下落和变形</p>
-		<p>↑：变形</p>
-		<p>←：左移</p>
-		<p>↓：下移（有自定义的下落速度）</p>
-		<p>→：右移</p>
-		<p>空格：速降（会直接到达最下层）</p>
+	<div class="remote">
+		<p class="title">对方游戏区</p>
+		<div class="game"  id="remote_game"></div>
+		<div class="gameOver" id="remote_gameOver">
+			<p>游戏结束啦</p>
+		</div>
+		<div class="info">
+			<div class="next"  id="remote_next"></div>
+			<div class="time">
+				<p>已用时： <span id="remote_time">0</span>s</p>
+				<p>已得分： <span id="remote_recode">0</span>分</p>
+			</div>
+			<button id="left">left</button><br/>
+			<button id="down">down</button><br/>
+			<button id="right">right</button><br/>
+			<button id="fall">fall</button><br/>
+			<button id="fixed">fixed</button><br/>
+			<button id="performNext">performNext</button><br/>
+			<button id="checkClear">checkClear</button><br/>
+			<button id="checkGameOver">checkGameOver</button><br/>
+			<button id="setTime">setTime</button><br/>
+			<button id="addScore">addScore</button><br/>
+			<button id="GameOver">GameOver</button><br/>
+			<button id="addTailLines">addTailLines</button><br/>
+		</div>
+
 	</div>
+	
 </body>
 <script type="text/javascript" src="js/square.js"></script>
 <script type="text/javascript" src="js/squareFactory.js"></script>

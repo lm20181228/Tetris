@@ -5,6 +5,28 @@
 body{
 	padding: 10px;
 }
+.tips{
+	/*width: 100%;*/
+	border: 1px solid green;
+	background: yellowgreen;
+	/*color: #fff;*/
+	/*width: 150px;*/
+	display: block;
+	vertical-align: top;
+	
+	padding: 10px;
+	border-radius: 6px;
+}
+.local,.remote{
+	width: 400px;
+	display: inline-block;
+	position: relative;
+	vertical-align: top;
+}
+.title{
+	line-height: 50px;
+	text-align: center;	
+}
 .game{
 	position: relative;
 	
@@ -21,8 +43,8 @@ body{
 	height: 400px;
 	background:rgba(0,0,0,.5);
 	position: absolute;
-	top: 10px;
-	left: 10px;
+	top: 50px;
+	left: 0px;
 	text-align: center;
 	display: none;
 }
@@ -41,7 +63,7 @@ body{
 }
 .info{
 	/*border:1px solid red;*/
-	padding-left: 50px;
+	padding-left: 40px;
 	display: inline-block;
 	/*width: 80px;*/
 	vertical-align: top;
@@ -67,14 +89,4 @@ body{
 	background-color: gray;
 	border:1px solid #000;
 }
-.tips{
-	border: 1px solid green;
-	background: yellowgreen;
-	/*color: #fff;*/
-	
-	display: inline-block;
-	vertical-align: top;
-	margin-left: 45px;
-	padding: 10px;
-	border-radius: 6px;
-}
+
