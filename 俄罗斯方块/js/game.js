@@ -126,7 +126,7 @@ var Game = function(){
 	var rotate = function(){
 		if(cur.canRotate(isValid)){
 			clearData();
-			// cur.rotate();
+			cur.rotate();
 			setData();
 			refresh(gameData,gameDivs);
 		}
@@ -167,8 +167,8 @@ var Game = function(){
 		gameDiv = doms.gameDiv;
 		nextDiv = doms.nextDiv;
 		//实例化方块数据
-		cur = new Square();
-		next = new Square();
+		cur = SquareFactory.prototype.make(4);
+		next = SquareFactory.prototype.make(2);
 		//初始化游戏区的所有方块布局
 		initDiv(gameData,gameDivs,gameDiv);//用div填充游戏区
 		initDiv(next.data,nextDivs,nextDiv);//用div填充待出现方块区
@@ -177,7 +177,7 @@ var Game = function(){
 		setData();
 		//刷新游戏区方块布局
 		refresh(gameData,gameDivs);
-		refresh(cur.data,nextDivs);
+		refresh(next.data,nextDivs);
 	}
 	//导出API
 	this.init = init;
