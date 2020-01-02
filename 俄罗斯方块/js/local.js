@@ -2,6 +2,10 @@
 var Local = function(){
 	//游戏对象
 	var game;
+	//定时器
+	var timer = null;
+	//时间间隔
+	var INITERVAL = 600;
 	//绑定键盘事件
 	var bindKeyEvent = function(){
 		document.onkeydown = function(e){
@@ -32,6 +36,15 @@ var Local = function(){
 			}
 		}
 	}
+	//移动
+	
+	var move = function(){
+		if(!game.down()){
+			game.fixed();
+			game.checkClear();
+			game.performNext();
+		}
+	}
 	//开始
 	var start = function(){
 		var doms = {
@@ -41,6 +54,8 @@ var Local = function(){
 		game = new Game();
 		game.init(doms);
 		bindKeyEvent();
+		//定时器效果，方块自由下落效果
+		timer = setInterval (move ,INITERVAL) 
 	}
 	//导出API
 	this.start = start;

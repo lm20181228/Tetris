@@ -21,9 +21,9 @@ var Game = function(){
 		[0,0,0,0,0,0,0,0,0,0],
 		[0,0,0,0,0,0,0,0,0,0],
 		[0,0,0,0,0,0,0,0,0,0],
-		[0,1,0,0,0,0,0,0,0,0],
-		[1,1,0,0,0,0,0,0,0,0],
-		[1,1,1,1,1,1,0,0,0,0]
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0]
 	];
 	//当前方块   下一个方块
 	var cur,next;
@@ -162,13 +162,61 @@ var Game = function(){
 			refresh(gameData,gameDivs);
 		}
 	}
+	//方块移动到底部的时候，固定
+	var fixed = function(){
+		for(var i = 0; i <cur.data.length; i++){
+			for(var j=0;j<cur.data[0].length; j++){
+				if(check(cur.origin,i,j)){
+					if(gameData[cur.origin.x + i][cur.origin.y + j] == 2){
+						gameData[cur.origin.x + i][cur.origin.y + j] = 1
+					}
+				}
+			}
+		}
+		refresh(gameData,gameDivs);
+	}
+	//使用下一个方块
+	var performNext = function(){
+		cur = next;
+		setData();
+		next = SquareFactory.prototype.make();
+		console.log(next);
+		refresh(gameData,gameDivs);
+		refresh(next.data,nextDivs)
+	}
+	//消行方法
+	var checkClear = function(){
+		//从底部开始判断，从下往上，遇到一整排符合条件的，删除
+		for(var i =gameData.length -1;i>=0;i--){
+			var clear = true;
+			for(var j =0;j<gameData[0].length; j++){
+				if(gameData[i][j]!==1){
+					clear = false;
+					break;
+				}
+			}
+			if(clear){
+				for(var m=i; m>0;m--){
+					for(var n =0;n<gameData[0].length;n++){
+						gameData[m][n] = gameData[m-1][n]
+					}
+				}
+				for(var n=0;n<gameData[0].length;n++){
+					gameData[0][n] = 0;
+				}
+				i++;
+			}
+
+		}
+		
+	}
 	//初始化
 	var init = function(doms){
 		gameDiv = doms.gameDiv;
 		nextDiv = doms.nextDiv;
 		//实例化方块数据
-		cur = SquareFactory.prototype.make(4);
-		next = SquareFactory.prototype.make(2);
+		cur = SquareFactory.prototype.make();
+		next = SquareFactory.prototype.make();
 		//初始化游戏区的所有方块布局
 		initDiv(gameData,gameDivs,gameDiv);//用div填充游戏区
 		initDiv(next.data,nextDivs,nextDiv);//用div填充待出现方块区
@@ -191,4 +239,7 @@ var Game = function(){
 		}
 		return false;
 	}
+	this.fixed = fixed;
+	this.performNext = performNext;
+	this.checkClear = checkClear;
 }
