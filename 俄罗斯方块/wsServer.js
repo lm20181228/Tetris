@@ -8,7 +8,19 @@ app.listen(PORT);
 var clientCount = 0;
 //用于存储客户端socket
 var socketMap = {};
-
+var bindListener = function(socket,event){
+	socket.on(event,function(data){
+		if(socket.clientNum % 2 == 0){
+			if(socketMap[socket.clientNum - 1]){
+				socketMap[socket.clientNum - 1].emit(event,data);
+			}
+		}else{
+			if(socketMap[socket.clientNum + 1]){
+				socketMap[socket.clientNum + 1].emit(event,data);
+			}
+		}
+	})
+}
 /*function handler(req,res){
 	fs.readFile(_dirname + '/index.html',function(err,data){
 		if(err){
@@ -32,29 +44,14 @@ io.on("connection",function(socket){
 			socketMap[clientCount - 1].emit("start");
 		}
 	}
-	socket.on("init",function(data){
-		if(socket.clientNum % 2 == 0){
-			if(socketMap[socket.clientNum - 1]){
-				socketMap[socket.clientNum - 1].emit("init",data);
-			}
-		}else{
-			if(socketMap[socket.clientNum + 1]){
-				socketMap[socket.clientNum + 1].emit("init",data);
-			}
-		}
-	})
-	socket.on("next",function(data){
-		console.log("ws"+data.type)
-		if(socket.clientNum % 2 == 0){
-			if(socketMap[socket.clientNum - 1]){
-				socketMap[socket.clientNum - 1].emit("next",data);
-			}
-		}else{
-			if(socketMap[socket.clientNum + 1]){
-				socketMap[socket.clientNum + 1].emit("next",data);
-			}
-		}
-	})
+	bindListener(socket,"init");
+	bindListener(socket,"next");
+	bindListener(socket,"fall");
+	bindListener(socket,"left");
+	bindListener(socket,"down");
+	bindListener(socket,"right");
+	bindListener(socket,"rotate");
+	
 	socket.on("disconnect",function(){
 		console.log("websocket disconnet!!")
 	})

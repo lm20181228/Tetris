@@ -17,22 +17,27 @@ var Local = function(socket){
 				case 32:
 					//space;
 					game.fall();
+					socket.emit("fall");
 					break;
 				case 37:
 					//left;
 					game.left();
+					socket.emit("left");
 					break;
 				case 38:
 					//top 切换形态
 					game.rotate();
+					socket.emit("rotate");
 					break;
 				case 39:
 					//right；
 					game.right();
+					socket.emit("right");
 					break;
 				case 40:
 					//down;
 					game.down();
+					socket.emit("down");
 					break;
 				default :
 					break;
@@ -44,7 +49,9 @@ var Local = function(socket){
 	var move = function(type){
 		if(!game.down()){
 			game.fixed();//判断是否固定游戏块
+			socket.emit("fixed");
 			game.checkClear();//判断是否清行
+			
 			if(game.checkGameOver()){
 				//判断游戏是否结束
 				stop();

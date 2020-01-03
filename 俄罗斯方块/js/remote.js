@@ -4,13 +4,22 @@ var Remote = function(socket){
 
 	var bindEvents = function(){
 		socket.on("init",function(data){
-			console.log("init"+data.type)
-			
 			start(data.type);
 		})
 		socket.on("next",function(data){
-			console.log("next"+data.type)
 			game.performNext(data.type);
+		})
+		socket.on("fall",function(){
+			game.fall();
+		})
+		socket.on("left",function(){
+			game.left();
+		})
+		socket.on("down",function(){
+			game.down();
+		})
+		socket.on("rotate",function(){
+			game.rotate();
 		})
 	}
 	var start = function(type){
