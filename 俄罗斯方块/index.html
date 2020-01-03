@@ -11,6 +11,7 @@
 		<p>游戏注释：用键盘控制方块的下落和变形</p>
 		<p> ↑ ：变形; ← ：左移; ↓ ：下移（有自定义的下落速度）; → ：右移; 空格 ：速降（会直接到达最下层）</p>
 	</div>
+	<p id="wait"></p>
 	<div class="local">
 		<p class="title">我的游戏区</p>
 		<div class="game"  id="local_game"></div>
@@ -54,6 +55,7 @@
 	</div>
 	
 </body>
+<script type="text/javascript" src="socket.io.js"></script>
 <script type="text/javascript" src="js/square.js"></script>
 <script type="text/javascript" src="js/squareFactory.js"></script>
 <script type="text/javascript" src="js/game.js"></script>

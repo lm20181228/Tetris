@@ -1,5 +1,5 @@
 // 对战玩家游戏区
-var Remote = function(){
+var Remote = function(socket){
 	var game;
 
 	var bindEvents = function(){

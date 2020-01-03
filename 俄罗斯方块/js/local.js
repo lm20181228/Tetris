@@ -1,5 +1,5 @@
 // 本地游戏区
-var Local = function(){
+var Local = function(socket){
 	//游戏对象
 	var game;
 	//定时器
@@ -109,5 +109,11 @@ var Local = function(){
 		document.onkeydown = null;
 	}
 	//导出API
-	this.start = start;
+	
+	socket.on("start",function(){
+		document.getElementById("wait").innerHTML = "";
+		start();
+		console.log("游戏开始");
+	})
+	/*this.start = start;*/
 }
