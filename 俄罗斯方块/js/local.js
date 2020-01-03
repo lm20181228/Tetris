@@ -41,7 +41,7 @@ var Local = function(socket){
 		}
 	}
 	//移动
-	var move = function(){
+	var move = function(type){
 		if(!game.down()){
 			game.fixed();//判断是否固定游戏块
 			game.checkClear();//判断是否清行
@@ -50,7 +50,8 @@ var Local = function(socket){
 				stop();
 				game.GameOver(true)
 			}else{
-				game.performNext();
+				var genType = generataType();
+				game.performNext(genType);
 			}
 		}
 	}
@@ -66,6 +67,10 @@ var Local = function(socket){
 		} 
 		return lines;
 	}
+	var generataType = function(){
+		var index = Math.ceil(Math.random()*7);
+		return index;
+	}
 	//计时函数
 	var timeunc = null;
 	var timeFunc = function(){
@@ -76,7 +81,6 @@ var Local = function(socket){
 				game.addTailLines(generataBottomLine(1));
 			}
 		},1000) ;
-
 	}
 	//设置时间
 	//开始
@@ -89,12 +93,19 @@ var Local = function(socket){
 			gameOverDiv:document.getElementById("local_gameOver")
 		}
 		game = new Game();
-		game.init(doms);
+		var genType = generataType();
+		game.init(doms,genType);
+		socket.emit("init",{type:genType})
 		bindKeyEvent();
+		var t = generataType();
+		game.performNext(t);
+		socket.emit("next",{type:t})
 		//计时系统
 		timeFunc();
 		//定时器效果，方块自由下落效果
-		timer = setInterval (move ,INITERVAL) 
+		timer = setInterval (function(){
+			move(t) 
+		},INITERVAL)
 	}
 	//结束
 	var stop = function(){

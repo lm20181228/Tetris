@@ -25,15 +25,36 @@ io.on("connection",function(socket){
 	socket.clientNum = clientCount;
 	socketMap[clientCount] = socket;
 	if(clientCount % 2 ==1){
-		console.log(clientCount);
 		socket.emit("waiting","正在匹配对手");
 	}else{
 		socket.emit("start");
-		console.log("start:  "+clientCount);
-		
-		socketMap[clientCount - 1].emit("start");
+		if(socketMap[clientCount - 1]){
+			socketMap[clientCount - 1].emit("start");
+		}
 	}
-
+	socket.on("init",function(data){
+		if(socket.clientNum % 2 == 0){
+			if(socketMap[socket.clientNum - 1]){
+				socketMap[socket.clientNum - 1].emit("init",data);
+			}
+		}else{
+			if(socketMap[socket.clientNum + 1]){
+				socketMap[socket.clientNum + 1].emit("init",data);
+			}
+		}
+	})
+	socket.on("next",function(data){
+		console.log("ws"+data.type)
+		if(socket.clientNum % 2 == 0){
+			if(socketMap[socket.clientNum - 1]){
+				socketMap[socket.clientNum - 1].emit("next",data);
+			}
+		}else{
+			if(socketMap[socket.clientNum + 1]){
+				socketMap[socket.clientNum + 1].emit("next",data);
+			}
+		}
+	})
 	socket.on("disconnect",function(){
 		console.log("websocket disconnet!!")
 	})

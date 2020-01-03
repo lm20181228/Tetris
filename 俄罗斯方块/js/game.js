@@ -175,10 +175,10 @@ var Game = function(){
 		refresh(gameData,gameDivs);
 	}
 	//使用下一个方块
-	var performNext = function(){
+	var performNext = function(type){
 		cur = next;
 		setData();
-		next = SquareFactory.prototype.make();
+		next = SquareFactory.prototype.make(type);
 		refresh(gameData,gameDivs);
 		refresh(next.data,nextDivs)
 	}
@@ -239,7 +239,7 @@ var Game = function(){
 		}
 	}
 	//初始化
-	var init = function(doms){
+	var init = function(doms,type){
 		gameDiv = doms.gameDiv;
 		nextDiv = doms.nextDiv;
 		timeDiv = doms.timeDiv;
@@ -247,8 +247,8 @@ var Game = function(){
 		gameOverDiv = doms.gameOverDiv;
 
 		//实例化方块数据
-		cur = SquareFactory.prototype.make();
-		next = SquareFactory.prototype.make();
+		cur = SquareFactory.prototype.make(type);
+		next = SquareFactory.prototype.make(type);
 		//初始化游戏区的所有方块布局
 		initDiv(gameData,gameDivs,gameDiv);//用div填充游戏区
 		initDiv(next.data,nextDivs,nextDiv);//用div填充待出现方块区
