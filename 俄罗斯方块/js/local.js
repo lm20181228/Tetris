@@ -60,10 +60,11 @@ var Local = function(socket){
 			}
 			
 			if(game.checkGameOver()){
+				console.log("游戏结束")
 				//判断游戏是否结束
 				stop();
-				game.GameOver(true);
-				socket.emit("GameOver",{isOver:true});
+				game.GameOver(false);
+				socket.emit("lose",false);
 			}else{
 				var genType = generataType();
 				game.performNext(genType);
@@ -96,11 +97,6 @@ var Local = function(socket){
 			time++;
 			game.setTime(time);
 			socket.emit("setTime",{time:time})
-			// if( time % 10 ==0){
-			// 	var lines = generataBottomLine(1);
-			// 	game.addTailLines(lines);
-			// 	socket.emit("addTailLines",{lines:lines})
-			// }
 		},1000) ;
 	}
 	//设置时间
@@ -151,5 +147,11 @@ var Local = function(socket){
 		game.addTailLines(lines)
 		socket.emit("addTailLinesLocal",{lines:lines});
 	})
+	socket.on("lose",function(data){
+		stop();
+		game.GameOver(true);
+		socket.emit("win")
+	})
+	
 	/*this.start = start;*/
 }

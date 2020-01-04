@@ -39,9 +39,13 @@ var Remote = function(socket){
 		socket.on("addTailLines",function(data){
 			game.addTailLines(data.lines);
 		})
-		socket.on("GameOver",function(data){
-			game.GameOver(data.isOver);
+		socket.on("lose",function(data){
+			game.GameOver(false);
 		})
+		socket.on("win",function(data){
+			game.GameOver(true);
+		})
+		
 		socket.on("addTailLinesLocal",function(data){
 			game.addTailLines(data.lines);
 		})

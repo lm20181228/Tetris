@@ -56,9 +56,11 @@ io.on("connection",function(socket){
 	bindListener(socket,"ckeckClear");
 	bindListener(socket,"setTime");
 	bindListener(socket,"addTailLines");
-	bindListener(socket,"GameOver");
-	bindListener(socket,"addTailLinesLocal");
+	bindListener(socket,"lose");
+	bindListener(socket,"win");
 	
+	bindListener(socket,"addTailLinesLocal");
+
 	socket.on("addTailLines",function(data){
 		if(clientCount % 2 ==1){
 			if(socketMap[clientCount - 1]){

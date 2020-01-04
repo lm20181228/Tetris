@@ -223,9 +223,21 @@ var Game = function(){
 	}
 	// 游戏结束
 	var GameOver =  function(flag){
+		console.log("00000000000000000")
+		gameOverDiv.style.display = "block";
+		var titleP = document.createElement("p");
 		if(flag){
-			gameOverDiv.style.display = "block";
+			titleP.innerHTML = "恭喜你战胜对方，获得本次对战的胜利！！"
+			titleP.style.color = "green";
+			titleP.style.background = "#fff"
+		}else{
+			titleP.innerHTML = "很遗憾你输了，再来一次吧。"
+			titleP.style.color = "red";
+			titleP.style.background = "#000"
 		}
+
+		gameOverDiv.appendChild(titleP);
+		return false;
 		
 	}
 	// 底部增加行
