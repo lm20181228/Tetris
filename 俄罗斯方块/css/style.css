@@ -40,7 +40,7 @@ body{
 }
 .gameOver{
 	width: 200px;
-	height: 400px;
+	height: 200px;
 	background:rgba(0,0,0,.5);
 	position: absolute;
 	top: 50px;
@@ -48,7 +48,7 @@ body{
 	text-align: center;
 	display: none;
 	color: #fff;
-	padding-top: 180px;
+	padding-top: 200px;
 }
 
 .next{
