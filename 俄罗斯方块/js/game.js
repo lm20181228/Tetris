@@ -184,6 +184,7 @@ var Game = function(){
 	}
 	//消行方法
 	var checkClear = function(){
+		var lines = 0; 
 		//从底部开始判断，从下往上，遇到一整排符合条件的，删除
 		for(var i =gameData.length -1;i>=0;i--){
 			var clear = true;
@@ -202,10 +203,13 @@ var Game = function(){
 				for(var n=0;n<gameData[0].length;n++){
 					gameData[0][n] = 0;
 				}
-				addScore();
+				
+				lines++;
 				i++;
 			}
 		}
+		addScore(lines);
+		return lines;
 	}
 	//判断游戏是否结束
 	var checkGameOver = function(){
@@ -261,8 +265,8 @@ var Game = function(){
 	}
 	//设置分数
 	var record = 0;
-	var addScore = function(){
-		record++;
+	var addScore = function(num){
+		record+=num;
 		scoreDiv.innerHTML = record;
 	}
 	var setTime = function(time){

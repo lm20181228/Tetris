@@ -51,6 +51,25 @@ io.on("connection",function(socket){
 	bindListener(socket,"down");
 	bindListener(socket,"right");
 	bindListener(socket,"rotate");
+	bindListener(socket,"fixed");
+	bindListener(socket,"performNext");
+	bindListener(socket,"ckeckClear");
+	bindListener(socket,"setTime");
+	bindListener(socket,"addTailLines");
+	bindListener(socket,"GameOver");
+	bindListener(socket,"addTailLinesLocal");
+	
+	socket.on("addTailLines",function(data){
+		if(clientCount % 2 ==1){
+			if(socketMap[clientCount - 1]){
+				socketMap[clientCount - 1].emit("addTailLines",data);
+			}
+		}else{
+			if(socketMap[clientCount + 1]){
+				socketMap[clientCount + 1].emit("addTailLines",data);
+			}
+		}
+	})
 	
 	socket.on("disconnect",function(){
 		console.log("websocket disconnet!!")

@@ -15,12 +15,38 @@ var Remote = function(socket){
 		socket.on("left",function(){
 			game.left();
 		})
+		socket.on("right",function(){
+			game.right();
+		})
 		socket.on("down",function(){
 			game.down();
 		})
 		socket.on("rotate",function(){
 			game.rotate();
 		})
+		socket.on("fixed",function(){
+			game.fixed();
+		})
+		socket.on("performNext",function(data){
+			game.performNext(data.type);
+		})
+		socket.on("ckeckClear",function(){
+			game.checkClear();
+		})
+		socket.on("setTime",function(data){
+			game.setTime(data.time);
+		})
+		socket.on("addTailLines",function(data){
+			game.addTailLines(data.lines);
+		})
+		socket.on("GameOver",function(data){
+			game.GameOver(data.isOver);
+		})
+		socket.on("addTailLinesLocal",function(data){
+			game.addTailLines(data.lines);
+		})
+		
+		
 	}
 	var start = function(type){
 		var doms = {

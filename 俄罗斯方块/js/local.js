@@ -50,16 +50,27 @@ var Local = function(socket){
 		if(!game.down()){
 			game.fixed();//判断是否固定游戏块
 			socket.emit("fixed");
-			game.checkClear();//判断是否清行
+			//判断是否清行
+			var lines = game.checkClear();
+			if(lines > 0){
+				socket.emit("ckeckClear");
+				// game.addTailLines(lines);
+				// 新增干扰行 
+			 	socket.emit("addTailLines",{lines:lines})
+			}
 			
 			if(game.checkGameOver()){
 				//判断游戏是否结束
 				stop();
-				game.GameOver(true)
+				game.GameOver(true);
+				socket.emit("GameOver",{isOver:true});
 			}else{
 				var genType = generataType();
 				game.performNext(genType);
+				socket.emit("performNext",{type:genType})
 			}
+		}else{
+			socket.emit("down")
 		}
 	}
 	// 随机生成干扰行
@@ -84,9 +95,12 @@ var Local = function(socket){
 		timeunc = setInterval(function(){
 			time++;
 			game.setTime(time);
-			if( time % 10 ==0){
-				game.addTailLines(generataBottomLine(1));
-			}
+			socket.emit("setTime",{time:time})
+			// if( time % 10 ==0){
+			// 	var lines = generataBottomLine(1);
+			// 	game.addTailLines(lines);
+			// 	socket.emit("addTailLines",{lines:lines})
+			// }
 		},1000) ;
 	}
 	//设置时间
@@ -131,7 +145,11 @@ var Local = function(socket){
 	socket.on("start",function(){
 		document.getElementById("wait").innerHTML = "";
 		start();
-		console.log("游戏开始");
+	})
+	socket.on("addTailLines",function(data){
+		var lines = generataBottomLine(data.lines);
+		game.addTailLines(lines)
+		socket.emit("addTailLinesLocal",{lines:lines});
 	})
 	/*this.start = start;*/
 }
