@@ -39,9 +39,12 @@ io.on("connection",function(socket){
 	if(clientCount % 2 ==1){
 		socket.emit("waiting","正在匹配对手");
 	}else{
-		socket.emit("start");
+		
 		if(socketMap[clientCount - 1]){
+			socket.emit("start");
 			socketMap[clientCount - 1].emit("start");
+		}else{
+			socket.emit("leave")
 		}
 	}
 	bindListener(socket,"init");
@@ -74,6 +77,15 @@ io.on("connection",function(socket){
 	})
 	
 	socket.on("disconnect",function(){
-		console.log("websocket disconnet!!")
+		if(socket.clientNum % 2 ==0){
+			if(socketMap[socket.clientNum - 1]){
+				socketMap[socket.clientNum - 1].emit("leave");
+			}
+		}else{
+			if(socketMap[socket.clientNum + 1]){
+				socketMap[socket.clientNum + 1].emit("leave");
+			}
+		}
+		delete(socketMap[socket.clientNum]);
 	})
 })

@@ -152,6 +152,10 @@ var Local = function(socket){
 		game.GameOver(true);
 		socket.emit("win")
 	})
-	
+	socket.on('leave',function(){
+		document.getElementById("local_gameTips").innerHTML = "对方已掉线！";
+		document.getElementById("remote_gameTips").innerHTML ="已掉线！" 
+		stop();
+	})
 	/*this.start = start;*/
 }
